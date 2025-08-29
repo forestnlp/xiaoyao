@@ -1,0 +1,14 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment directories
+/xiaoyao/
+/venv/
+
+# IDE and editor files
+.vscode/
+.idea/
+
+# Configuration files with secrets
+/tushare/config.ini
