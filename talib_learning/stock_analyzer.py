@@ -103,7 +103,7 @@ def analyze_stock(symbol):
         print("结论: 震荡概率较高。")
 
     print("\n免责声明：本分析仅为量化指标解读，不构成任何投资建议。")
-    print(f"{'='*55}")
+    print(f"{ '='*55}")
 
 
 if __name__ == "__main__":
