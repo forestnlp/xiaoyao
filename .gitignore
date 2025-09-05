@@ -12,3 +12,6 @@ __pycache__/
 
 # Configuration files with secrets
 /tushare/config.ini
+
+#data
+.csv
