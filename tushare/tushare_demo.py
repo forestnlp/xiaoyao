@@ -88,6 +88,69 @@ def get_financial_indicators(pro, ts_code='600519.SH'):
         print(f"获取财务指标失败：{e}")
         return None
 
+def get_index_data(pro):
+    """
+    获取指数基本信息和行情数据。
+    """
+    print("\n--- 正在获取指数数据 ---")
+    try:
+        # 获取指数基本信息
+        df_basic = pro.index_basic(market='SSE')
+        print(f"成功获取 {len(df_basic)} 个上交所指数。")
+        print(df_basic.head())
+        
+        # 获取上证指数日线数据
+        df_daily = pro.index_daily(ts_code='000001.SH', start_date='20240101', end_date='20240131')
+        print(f"\n成功获取上证指数 {len(df_daily)} 天的行情数据。")
+        print(df_daily.head())
+        return df_basic, df_daily
+    except Exception as e:
+        print(f"获取指数数据失败：{e}")
+        return None, None
+
+def get_money_flow(pro, ts_code='000001.SZ'):
+    """
+    获取个股资金流向数据。
+    """
+    print(f"\n--- 正在获取 {ts_code} 的资金流向 ---")
+    try:
+        df = pro.moneyflow(ts_code=ts_code, start_date='20240101', end_date='20240131')
+        print(f"成功获取 {len(df)} 天的资金流向数据。")
+        print(df.head())
+        return df
+    except Exception as e:
+        print(f"获取资金流向失败：{e}")
+        return None
+
+def get_top_list(pro):
+    """
+    获取龙虎榜数据。
+    """
+    print("\n--- 正在获取龙虎榜数据 ---")
+    try:
+        df = pro.top_list(trade_date='20240115')
+        print(f"成功获取 {len(df)} 条龙虎榜记录。")
+        print(df.head())
+        return df
+    except Exception as e:
+        print(f"获取龙虎榜数据失败：{e}")
+        return None
+
+def get_minute_data(pro, ts_code='000001.SZ'):
+    """
+    获取分钟级行情数据（需要高级权限）。
+    """
+    print(f"\n--- 正在获取 {ts_code} 的分钟数据 ---")
+    try:
+        # 注意：分钟数据需要较高的积分权限
+        df = pro.stk_mins(ts_code=ts_code, start_date='20240115 09:30:00', end_date='20240115 15:00:00', freq='5min')
+        print(f"成功获取 {len(df)} 条5分钟K线数据。")
+        print(df.head())
+        return df
+    except Exception as e:
+        print(f"获取分钟数据失败（可能需要更高权限）：{e}")
+        return None
+
 if __name__ == "__main__":
     pro_api = initialize_api()
 
@@ -100,3 +163,15 @@ if __name__ == "__main__":
 
         # 示例3: 获取贵州茅台的财务指标
         get_financial_indicators(pro_api, ts_code='600519.SH')
+        
+        # 示例4: 获取指数数据
+        get_index_data(pro_api)
+        
+        # 示例5: 获取资金流向数据
+        get_money_flow(pro_api, ts_code='000001.SZ')
+        
+        # 示例6: 获取龙虎榜数据
+        get_top_list(pro_api)
+        
+        # 示例7: 获取分钟级数据
+        get_minute_data(pro_api, ts_code='000001.SZ')
