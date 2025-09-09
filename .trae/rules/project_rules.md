@@ -42,3 +42,7 @@ Demo 需注明依赖环境、数据路径配置，确保可直接运行；
   git config --global --unset http.proxy
   git config --global --unset https.proxy
   ```
+12. Python环境管理（高）
+所有Python程序必须在conda环境"xiaoyao"下运行，避免环境包依赖问题；
+执行Python脚本前需确认已激活xiaoyao环境（conda activate xiaoyao）；
+禁止在其他环境或系统Python下运行项目代码，防止反复安装卸载包的问题。
