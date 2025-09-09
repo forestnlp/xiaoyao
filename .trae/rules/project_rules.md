@@ -28,3 +28,17 @@ Demo 需注明依赖环境、数据路径配置，确保可直接运行；
 项目所有子目录下需创建 MD 文件，说明该目录目标、任务、当前进度。
 9. 项目根目录下有一个qlib目录。它是一个开源项目clone下来的，不要改动它，有必要的时候可以读取里面的py内容。
 10. 项目根目录下有一个qlib_data目录。它是存储qlib格式的数据用的。qlib的二进制格式的股票数据存放在这里。
+11. 网络代理配置（可选）
+当需要访问GitHub等外部服务时，可使用以下代理配置：
+- 代理地址：http://127.0.0.1:10809
+- 支持协议：HTTP/HTTPS
+- Git配置命令：
+  ```
+  git config --global http.proxy http://127.0.0.1:10809
+  git config --global https.proxy http://127.0.0.1:10809
+  ```
+- 取消代理：
+  ```
+  git config --global --unset http.proxy
+  git config --global --unset https.proxy
+  ```
