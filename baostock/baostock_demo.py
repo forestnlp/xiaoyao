@@ -71,16 +71,118 @@ def get_daily_prices(symbol='sh.600519', start_date='2024-01-01'):
         print(f"获取日线行情时发生错误: {e}")
         return None
 
+def get_minute_data(code, start_date, end_date, frequency="5"):
+    """获取分钟线数据"""
+    try:
+        rs = bs.query_history_k_data_plus(code,
+            "date,time,code,open,high,low,close,volume,amount,adjustflag",
+            start_date=start_date, end_date=end_date,
+            frequency=frequency, adjustflag="3")
+        
+        data_list = []
+        while (rs.error_code == '0') & rs.next():
+            data_list.append(rs.get_row_data())
+        
+        if data_list:
+            result = pd.DataFrame(data_list, columns=rs.fields)
+            print(f"成功获取 {code} 的{frequency}分钟线数据")
+            return result
+        else:
+            print(f"未获取到 {code} 的分钟线数据")
+            return pd.DataFrame()
+    except Exception as e:
+        print(f"获取分钟线数据时出错: {e}")
+        return pd.DataFrame()
+
+def get_financial_data(code, year, quarter):
+    """获取财务数据"""
+    try:
+        rs = bs.query_profit_data(code=code, year=year, quarter=quarter)
+        
+        data_list = []
+        while (rs.error_code == '0') & rs.next():
+            data_list.append(rs.get_row_data())
+        
+        if data_list:
+            result = pd.DataFrame(data_list, columns=rs.fields)
+            print(f"成功获取 {code} 的{year}年Q{quarter}财务数据")
+            return result
+        else:
+            print(f"未获取到 {code} 的财务数据")
+            return pd.DataFrame()
+    except Exception as e:
+        print(f"获取财务数据时出错: {e}")
+        return pd.DataFrame()
+
+def get_macro_data(start_date, end_date):
+    """获取宏观经济数据"""
+    try:
+        rs = bs.query_deposit_rate_data(start_date=start_date, end_date=end_date)
+        
+        data_list = []
+        while (rs.error_code == '0') & rs.next():
+            data_list.append(rs.get_row_data())
+        
+        if data_list:
+            result = pd.DataFrame(data_list, columns=rs.fields)
+            print(f"成功获取存款利率数据")
+            return result
+        else:
+            print(f"未获取到宏观经济数据")
+            return pd.DataFrame()
+    except Exception as e:
+        print(f"获取宏观经济数据时出错: {e}")
+        return pd.DataFrame()
+
+def main():
+    """主函数：演示 BaoStock 的基本使用"""
+    print("=== BaoStock 演示开始 ===")
+    
+    # 登录
+    if not login():
+        return
+    
+    # 获取股票列表
+    print("\n1. 获取股票列表：")
+    stocks = get_all_stocks('2023-12-29')
+    if stocks is not None:
+        print(f"获取到 {len(stocks)} 只股票")
+        print(stocks.head())
+    
+    # 获取历史数据
+    print("\n2. 获取历史数据：")
+    hist_data = get_daily_prices('sh.600000', '2023-01-01')
+    if hist_data is not None:
+        print(f"获取到 {len(hist_data)} 条数据")
+        print(f"数据列名: {list(hist_data.columns)}")
+        print(hist_data.head())
+    
+    # 获取分钟线数据
+    print("\n3. 获取分钟线数据：")
+    minute_data = get_minute_data('sh.600000', '2023-12-01', '2023-12-05', '5')
+    if not minute_data.empty:
+        print(f"获取到 {len(minute_data)} 条5分钟线数据")
+        print(minute_data.head())
+    
+    # 获取财务数据
+    print("\n4. 获取财务数据：")
+    financial_data = get_financial_data('sh.600000', 2023, 3)
+    if not financial_data.empty:
+        print(financial_data)
+    
+    # 获取宏观经济数据
+    print("\n5. 获取宏观经济数据：")
+    macro_data = get_macro_data('2023-01-01', '2023-12-31')
+    if not macro_data.empty:
+        print(f"获取到 {len(macro_data)} 条宏观数据")
+        print(macro_data.head())
+    
+    # 登出
+    logout()
+    
+    print("\n=== BaoStock 演示结束 ===")
+    print("\n提示：如需更新到最新版本，请运行：")
+    print("pip install --upgrade baostock")
+
 if __name__ == "__main__":
-    print("--- BaoStock Demo 开始 ---")
-    if login():
-        # 示例1: 获取所有股票列表
-        get_all_stocks()
-        
-        # 示例2: 获取贵州茅台的日线数据
-        # 注意BaoStock的代码格式为 `sh.xxxxxx` 或 `sz.xxxxxx`
-        get_daily_prices(symbol='sh.600519')
-        
-        # 操作结束后登出
-        logout()
-    print("\n--- BaoStock Demo 结束 ---")
+    main()
