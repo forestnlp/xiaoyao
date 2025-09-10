@@ -1,0 +1,14 @@
+artifact_uri: file:D:\workspace\xiaoyao\mlruns/699932404097621035/ce72756cfc2a41708c8fd065d002490a/artifacts
+end_time: 1757514339147
+entry_point_name: ''
+experiment_id: '699932404097621035'
+lifecycle_stage: active
+run_id: ce72756cfc2a41708c8fd065d002490a
+run_name: mlflow_recorder
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1757514048073
+status: 3
+tags: []
+user_id: user
