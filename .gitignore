@@ -17,5 +17,6 @@ __pycache__/
 *.csv
 *.bin
 *.txt
+*.parquet
 
 /data

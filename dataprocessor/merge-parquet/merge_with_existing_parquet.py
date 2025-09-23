@@ -84,10 +84,14 @@ def merge_parquet_files(existing_file, new_file, output_file):
 def main():
     """主函数"""
     # 设置文件路径
-    existing_file = "d:/workspace/xiaoyao/data/stock_daily_price.parquet"
+    # existing_file = "d:/workspace/xiaoyao/data/stock_daily_price.parquet"
+    # new_file = "d:/workspace/xiaoyao/dataprocessor/merged_stock_data.parquet"
+    # output_file = "d:/workspace/xiaoyao/dataprocessor/merged_combined_stock_data.parquet"
+
+    existing_file = "d:/workspace/xiaoyao/data/stock_daily_auction.parquet"
     new_file = "d:/workspace/xiaoyao/dataprocessor/merged_stock_data.parquet"
     output_file = "d:/workspace/xiaoyao/dataprocessor/merged_combined_stock_data.parquet"
-    
+
     print("=" * 60)
     print("🚀 开始合并 parquet 文件")
     print("=" * 60)
