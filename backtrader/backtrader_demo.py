@@ -319,7 +319,7 @@ class TradeAnalyzer(bt.Analyzer):
         return {'trades': self.trades}
 
 
-def run_backtest(stock_code: str = 'sh.600570', start_date: str = '2023-01-01', end_date: str = None):
+def run_backtest(stock_code: str = 'sh.600570', start_date: str = '2005-01-01', end_date: str = None):
     """
     运行回测
     
@@ -389,7 +389,7 @@ def run_backtest(stock_code: str = 'sh.600570', start_date: str = '2023-01-01', 
     cerebro.adddata(data)
     
     # 设置初始资金
-    cerebro.broker.setcash(100000.0)
+    cerebro.broker.setcash(10000000.0)
     
     # 设置A股佣金（万分之三，最低5元）
     cerebro.broker.setcommission(
