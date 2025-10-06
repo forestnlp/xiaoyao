@@ -29,3 +29,6 @@ __pycache__/
 
 # Explicitly ignore DeepSeek key (redundant with *.conf)
 /localllm/deepseek/key.conf
+
+# Playwright persistent sessions (browser state)
+.playwright/
