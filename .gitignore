@@ -2,10 +2,6 @@
 __pycache__/
 *.pyc
 
-# Environment directories
-/xiaoyao/
-/venv/
-
 # IDE and editor files
 .vscode/
 .idea/
@@ -23,9 +19,6 @@ __pycache__/
 /data
 
 # ML outputs and models
-/labs/industry_ml/output/
-/labs/industry_ml/models/*.pkl
-/labs/industry_ml/models/*.joblib
 
 # Explicitly ignore DeepSeek key (redundant with *.conf)
 /localllm/deepseek/key.conf
