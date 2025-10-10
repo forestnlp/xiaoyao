@@ -231,9 +231,9 @@ class NewsDebateAnalyzer:
 
 # 使用示例
 if __name__ == "__main__":
-    PRO_COUNT = 2
+    PRO_COUNT = 3
     ANTI_COUNT = 3
-    NEWS_START_DAYS = 5
+    NEWS_START_DAYS = 2
     CSV_OUTPUT_PATH = f"./news_final_verdict_{datetime.today().strftime('%Y%m%d')}.csv"
 
     analyzer = NewsDebateAnalyzer()
