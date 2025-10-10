@@ -70,7 +70,8 @@ class NewsIndustryAnalyzer:
         return f"""你是一位专业的财经分析师，擅长分析新闻对股市行业板块和个股的影响。
 
 请根据提供的新闻内容，完成以下任务：
-1. 从列表中[{industries_str}]识别出受到重大利好影响的行业板块，(必须是非常重大的利好! 受到机构和广大散户认同的，宁缺毋滥)，最多选择5个最相关的行业
+1. 从列表中[{industries_str}]识别出受到重大利好影响的行业板块，最多选择5个最相关的行业。
+(必须是非常重大的利好，带来基本面根本改变的利好。! 受到机构和广大散户认同的，宁缺毋滥。)
 2. 对每个利好行业，简要说明理由（不超过50字）
 3. 为每个利好行业推荐1-3只相关的代表性个股（需是A股上市公司，注明股票代码）
 4. 对每个推荐的个股，简要说明推荐理由（不超过30字）
@@ -176,13 +177,14 @@ if __name__ == "__main__":
     # 创建分析器实例
     analyzer = NewsIndustryAnalyzer()
     import pandas as pd
-    from datetime import datetime
+    from datetime import datetime, timedelta
     
     df = pd.read_parquet('../data/stock_daily_cctvnews.parquet')
     
-    # 获取date 等于今日的新闻
+    # 获取date 在今日和昨日之间的新闻
     today = datetime.today().strftime('%Y%m%d')
-    df = df[df['date'] == today]
+    yesterday = (datetime.today() - timedelta(days=5)).strftime('%Y%m%d')
+    df = df[(df['date'] >= yesterday) & (df['date'] <= today)]
     
     # 循环遍历df，将title、content组合为news，传入大模型进行分析
     # 将news 和 result 保存在列表中，然后将列表保存为md文件

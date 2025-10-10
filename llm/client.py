@@ -11,9 +11,10 @@ class LocalLLMClient:
     兼容OpenAI API格式，支持计时功能
     """
     # base_url: str = "http://192.168.7.88:11434/v1/forestjay",
+    #  base_url: str = "http://*.gicp.net:43499/v1",
 
     def __init__(self, 
-                 base_url: str = "http://*.gicp.net:43499/v1",
+                 base_url: str = "http://192.168.7.88:11434/v1/",
                  model_name: str = "qwen3:30b-a3b-instruct-2507-q4_K_M",
                  timeout: int = 30,
                  log_requests: bool = True,
