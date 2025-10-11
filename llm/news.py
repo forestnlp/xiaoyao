@@ -1,3 +1,4 @@
+# 实现简单调用
 import json
 from typing import Dict, List, Optional
 from client import LocalLLMClient, create_client  # 假设LLM客户端类在LocalLLMClient模块中
