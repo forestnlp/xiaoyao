@@ -14,12 +14,12 @@ marketcap_df = pd.read_parquet(r'D:\workspace\xiaoyao\data\stock_daily_marketcap
 concept_df = pd.read_parquet(r'D:\workspace\xiaoyao\data\stock_daily_concept.parquet')
 
 
-# price_df 只取2025-01-01以后的数据
-price_df = price_df[price_df['date'] >= '2025-01-01']
-industry_df = industry_df[industry_df['date'] >= '2025-01-01']
-marketcap_df = marketcap_df[marketcap_df['date'] >= '2025-01-01']
-auction_df = auction_df[auction_df['date'] >= '2025-01-01']
-concept_df = concept_df[concept_df['date'] >= '2025-01-01']
+# price_df 只取2023-01-01以后的数据
+price_df = price_df[price_df['date'] >= '2023-01-01']
+industry_df = industry_df[industry_df['date'] >= '2023-01-01']
+marketcap_df = marketcap_df[marketcap_df['date'] >= '2023-01-01']
+auction_df = auction_df[auction_df['date'] >= '2023-01-01']
+concept_df = concept_df[concept_df['date'] >= '2023-01-01']
 
 # 将date转换为字符串类型
 price_df['date'] = price_df['date'].astype(str)
@@ -60,6 +60,23 @@ merged_df = merged_df.rename(columns={'money_x': 'money'})
 merged_df = merged_df.rename(columns={'money_y': 'auc_money'})
 
 merged_df.columns
+
+# import pandas as pd
+# import numpy as np
+
+# # 1. 确保索引为 datetime 类型（前提不可少）
+# merged_df.index = pd.to_datetime(merged_df.index, errors='coerce')
+# ref_date = pd.to_datetime('2025-01-01')
+
+# # 2. 最终修正版：先区分标量/非标量，再处理 NaN
+# merged_df['concept_name_list'] = merged_df.groupby('stock_code')['concept_name_list'].transform(
+#     lambda x: 
+#         # 分支1：有有效值时，用采样值填充标量 NaN
+#         x.fillna(x.loc[x.index >= ref_date].dropna().sample(1, random_state=42).iloc[0]) 
+#         if not x.loc[x.index >= ref_date].dropna().empty 
+#         # 分支2：无有效值时，仅替换“标量 NaN”为空列表
+#         else x.apply(lambda val: [] if (np.isscalar(val) and pd.isna(val)) else val)
+# )
 
 # 保存merged_df到D:\workspace\xiaoyao\data下
 merged_df.to_parquet(r'D:\workspace\xiaoyao\data\widetable.parquet', index=False)
